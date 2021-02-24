@@ -1,4 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
 html, body {
     padding: 0;
     margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+}
+
+.container {
+    margin-top: 10px;
+    display: grid;
+    gap: 10px;
+}
+
+.container div {
+    width: 100%;
+    padding: 2em;
+    text-align: center;
+}
+
+.homework {
+    background-color: #F83259;
+}
+
+.broken {
+    background-color: #FFFF04;
+}
+
+.infinity {
+    background-color: #63F6F3;
 }
