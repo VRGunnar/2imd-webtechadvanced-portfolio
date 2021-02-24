@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    /*background-image: url("https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");*/
+}
+
+.container {
+    display: grid;
+}
+
+p {
+    font-weight: lighter;
+    font-size: 10px;
+    letter-spacing: 5px;
+}
+
+h1 {
+    font-weight: bolder;
+    font-size: 50px;
+    letter-spacing: 10px;
+}
+
+.date {
+    font-weight: bolder;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.admit {
+    font-weight: bolder;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.ticketCost {
+    font-weight: bolder;
+    font-size: 18px;
+    letter-spacing: 2px;
+}.footer {
+     font-weight: lighter;
+     font-size: 10px;
+ }
+
+
+
+ .image img {
+     max-width: 100%;
+     width: 200px;
+ }
