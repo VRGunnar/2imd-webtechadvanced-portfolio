@@ -9,6 +9,7 @@ html, body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
     font-weight: 800;
+    font-size: 22px;
 }
 
 .container {
@@ -28,9 +29,9 @@ html, body {
 }
 
 .broken {
-    background-color: #FFFF04;
+    background-color: #63F6F3;
 }
 
 .infinity {
-    background-color: #63F6F3;
+        background-color: #FFFF04;
 }
