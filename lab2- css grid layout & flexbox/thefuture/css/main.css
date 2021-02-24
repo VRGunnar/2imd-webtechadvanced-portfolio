@@ -13,9 +13,9 @@ html, body {
 }
 
 .container {
-    margin-top: 10px;
+    margin-top: 8px;
     display: grid;
-    gap: 10px;
+    gap: 8px;
 }
 
 .container div {
@@ -34,4 +34,10 @@ html, body {
 
 .infinity {
         background-color: #FFFF04;
+}
+
+@media(min-width: 35em) {
+    .container{
+        grid-template-columns: 1fr 1fr;
+    }
 }
