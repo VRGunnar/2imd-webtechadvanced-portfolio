@@ -36,6 +36,15 @@ class Note {
     // in this function, 'this' will refer to the current note element
     // .removeChild(this)
     // remove the item from screen and from localstorage
+
+    document.querySelector('#taskList').removeChild(this);
+    let note = this.innerHTML;
+
+    let notes = localStorage.getItem('notes');
+    notes = JSON.parse(notes) || [];
+    let index = notes.indexOf(note);
+    notes.splice(index, 1);
+    localStorage.setItem("notes", JSON.stringify(notes));
   }
 }
 
