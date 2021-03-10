@@ -67,6 +67,14 @@ class App {
   loadNotesFromStorage() {
     // HINT🤩
     // load all notes from storage here and add them to the screen
+    let notes = localStorage.getItem('notes');
+    notes = JSON.parse(notes);
+    if (notes != null) {
+      for (let i = 0; i<notes.length; i++) {
+        let note = new Note(notes[i]);
+        note.add();
+      }
+    }
   }
 
   createNote(e) {
@@ -81,11 +89,13 @@ class App {
       let note = new Note(this.txtTodo.value);  //neem de value van je inputveld
       note.add();
       note.saveToStorage();
+      this.reset();
     }
   }
 
   reset() {
     // this function should reset the form / clear the text field
+    this.txtTodo.value = "";
   }
 }
 
