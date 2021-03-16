@@ -13,6 +13,7 @@ class App {
         this.latitude = result.coords.latitude;
         this.longitude = result.coords.longitude;
         this.getWeather();
+        this.getCSGO();
     }
 
     getWeather() {
@@ -24,8 +25,7 @@ class App {
             return response.json();
         }).then(data => {
             console.log(data);
-            document.querySelector("#weather").innerHTML = data.main.temp;
-
+            document.querySelector("#weather").innerHTML = data.weather[0].description;
         }).catch(error => {
             console.log(error);
         });
@@ -34,6 +34,28 @@ class App {
     errorLocation(error) {
         console.log(error);
     }
+
+    getCSGO() {
+        const apiKey = "awOAbdzU5zJjQ6tIAL2sFWVPVdmK-aJUbLiXK_dS1M2lPzgJ06E";
+
+        let url = `https://cors-anywhere.herokuapp.com/https://api.pandascore.co/csgo/matches?token=${apiKey}`;
+        fetch(url).then(response => {
+            console.log(response);
+            return response.json();
+        }).then (data => {
+            console.log(data);
+            let length = data.length;
+            let random = Math.floor(Math.random() * length);
+            if (data[random].live_embed_url == null) {
+                random = Math.floor(Math.random() * length);
+            }
+            document.querySelector("#csgoTeam").innerHTML = data[random].name;
+            document.querySelector("#csgoStream").setAttribute('src', data[random].live_embed_url + "&parent=www.example.com");
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+
 }
 
 let app = new App();
