@@ -25,7 +25,7 @@ class App {
             return response.json();
         }).then(data => {
             console.log(data);
-            document.querySelector("#weather").innerHTML = data.weather[0].description;
+            document.querySelector("#weather").innerHTML = "The weather right now: " + data.weather[0].description + ".";
         }).catch(error => {
             console.log(error);
         });
