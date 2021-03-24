@@ -3,6 +3,8 @@ class App {
         this.getLocation();
         this.latitude;
         this.longitude;
+        this.loadDataFromStorage();
+        this.showAd();
     }
 
     getLocation(){
@@ -13,23 +15,30 @@ class App {
         this.latitude = result.coords.latitude;
         this.longitude = result.coords.longitude;
         this.getWeather();
-        this.getCSGO();
-        this.getLol();
     }
 
     getWeather() {
         //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
         const apiKey = "333d9555968f7bddd1b2e207ac0da7d1";
         let url =`https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&appid=${apiKey}&units=metric`;
-        fetch(url).then(response => {
-            console.log(response);
-            return response.json();
-        }).then(data => {
-            console.log(data);
-            document.querySelector("#weather").innerHTML = "The weather right now: " + data.weather[0].description + ".";
-        }).catch(error => {
-            console.log(error);
-        });
+        if(this.temperature == null) {
+            fetch(url).then(response => {
+                console.log("data from api");
+                console.log(response);
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                let temperature = data.main.temp;
+                let weather = data.weather[0].main;
+                localStorage.setItem("temperature", JSON.stringify(temperature));
+                localStorage.setItem("weather", JSON.stringify(weather));
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+        else {
+            console.log("data from localstorage");
+        }
     }
 
     errorLocation(error) {
@@ -47,35 +56,44 @@ class App {
             console.log(data);
             let length = data.length;
             let random = Math.floor(Math.random() * length);
-            if (data[random].live_embed_url == null) {
+            do {
                 random = Math.floor(Math.random() * length);
-            }
+            } while (data[random].live_embed_url == null)
             document.querySelector("#csgoTeam").innerHTML = data[random].name;
+            document.querySelector("#csgoTime").innerHTML = data[random].begin_at;
             document.querySelector("#csgoStream").setAttribute('src', data[random].live_embed_url + "&parent=localhost");
         }).catch(error => {
             console.log(error);
         });
     }
 
-    getLol() {
-        const apiKey = "";
-        let url = `https://cors-anywhere.herokuapp.com/https://api.pandascore.co/lol/matches?token=${apiKey}`;
+    loadDataFromStorage() {
+        let lastclear = localStorage.getItem("lastclear"),
+            timeNow = (new Date().getTime());
+        if((timeNow - lastclear) > 1000 * 60 * 60){
+            localStorage.clear();
+            localStorage.setItem("lastclear", timeNow);
+        }
+        this.temperature = localStorage.getItem("temperature");
+        this.temperature = JSON.parse(this.temperature);
+        this.weather = localStorage.getItem("weather");
+        this.weather = JSON.parse(this.weather);
+    }
 
-        fetch(url).then(response => {
-            console.log(response);
-            return response.json();
-        }).then (data => {
-            console.log(data);
-            let length = data.length;
-            // let random = Math.floor(Math.random() * length);
-            // if (data[random].live_embed_url == null) {
-            //     random = Math.floor(Math.random() * length);
-            // }
-            // document.querySelector("#csgoTeam").innerHTML = data[random].name;
-            // document.querySelector("#csgoStream").setAttribute('src', data[random].live_embed_url + "&parent=localhost");
-        }).catch(error => {
-            console.log(error);
-        });
+    showAd() {
+        let temperature = localStorage.getItem("temperature");
+        temperature = JSON.parse(temperature);
+        let weather = localStorage.getItem("weather");
+        weather = JSON.parse(weather);
+        this.getCSGO();
+        if(temperature > 18 && weather == "Clear") {
+            console.log("outside weather");
+            document.querySelector('#temperature').innerHTML = "It's " + this.temperature + "°C and the sky is " + this.weather + " so get outside and watch the stream!";
+        }
+        else {
+            console.log("inside weather");
+            document.querySelector('#temperature').innerHTML = "It's " + this.temperature + "°C and the sky contains " + this.weather + " so stay inside and watch the stream!";
+        }
     }
 }
 
